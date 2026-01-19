@@ -2,75 +2,44 @@ pipeline {
     agent any
 
     tools {
-        dockerTool "Dockertool"
-    }
-
-    environment {
-        APP_IMAGE = "hola-mundo-node:latest"
-        APP_CONTAINER = "hola-mundo-node"
-        NODE_IMAGE = "node:20-bullseye"
+        nodejs "Node22"
+        dockerTool "Dockertool" 
     }
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Instalar dependencias') {
             steps {
-                script {
-                    // Verificamos si 'package.json' existe antes de correr npm
-                    def fileExists = fileExists 'package.json'
-                    if (fileExists) {
-                        sh '''
-                            docker run --rm \
-                                -v "$PWD:/app" \
-                                -w /app \
-                                ${NODE_IMAGE} \
-                                bash -lc "npm install"
-                        '''
-                    } else {
-                        error 'No se encuentra el archivo package.json en el repositorio'
-                    }
-                }
+                sh 'chmod +x -R node_modules/.bin/'
+                sh 'npm install'
             }
         }
-
         stage('Ejecutar tests') {
             steps {
-                sh '''
-                    docker run --rm \
-                      -v "$PWD:/app" \
-                      -w /app \
-                      ${NODE_IMAGE} \
-                      bash -lc "npm test"
-                '''
+                sh 'npm test'
             }
         }
 
         stage('Construir Imagen Docker') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh 'docker build -t ${APP_IMAGE} .'
+                sh 'docker build -t hola-mundo-node:latest .'
             }
         }
 
         stage('Ejecutar Contenedor Node.js') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
                 sh '''
-                    docker stop ${APP_CONTAINER} || true
-                    docker rm ${APP_CONTAINER} || true
-                    docker run -d --name ${APP_CONTAINER} -p 3000:3000 ${APP_IMAGE}
+                    docker stop hola-mundo-node || true
+                    docker rm hola-mundo-node || true
+                    docker run -d --name hola-mundo-node -p 3000:3000 hola-mundo-node:latest
                 '''
             }
         }
     }
-
-    post {
-        always {
-            echo "Pipeline finalizado con estado: ${currentBuild.currentResult}"
-        }
-    }
 }
+ 
