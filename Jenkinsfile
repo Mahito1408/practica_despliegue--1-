@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs "Node20"
-        dockerTool "Dockertool"
+        nodejs "Node25"
+        dockerTool "Dockertool" 
     }
 
     stages {
@@ -34,14 +34,12 @@ pipeline {
             }
             steps {
                 sh '''
-                    # Detener y eliminar contenedor anterior si existe
                     docker stop hola-mundo-node || true
                     docker rm hola-mundo-node || true
-                    
-                    # Ejecutar el contenedor en el puerto 8087 de la máquina local
-                    docker run -d --name hola-mundo-node -p 8087:3000 hola-mundo-node:latest
+                    docker run -d --name hola-mundo-node -p 3000:3000 hola-mundo-node:latest
                 '''
             }
         }
     }
 }
+ 

@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:20
+FROM node:25
 
 # Crear directorio de la aplicación
 WORKDIR /usr/src/app
@@ -15,7 +15,7 @@ RUN npm install
 COPY users.json .
 
 # Exponer el puerto de la aplicación
-EXPOSE 8087
+EXPOSE 3000
 
 # Comando para iniciar la aplicación
 CMD ["node", "index.js"]
