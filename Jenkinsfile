@@ -2,44 +2,58 @@ pipeline {
     agent any
 
     tools {
-        nodejs "Node25"
-        dockerTool "Dockertool" 
+        dockerTool "Dockertool"
+    }
+
+    environment {
+        APP_IMAGE = "hola-mundo-node:latest"
+        APP_CONTAINER = "hola-mundo-node"
+        NODE_IMAGE = "node:20-bullseye"
     }
 
     stages {
-        stage('Instalar dependencias') {
+
+        stage('Checkout') {
             steps {
-                sh 'chmod +x -R node_modules/.bin/'
-                sh 'npm install'
+                checkout scm
             }
         }
+
+        stage('Instalar dependencias') {
+            steps {
+                sh '''
+                    docker run --rm \
+                      -v "$PWD:/app" \
+                      -w /app \
+                      ${NODE_IMAGE} \
+                      bash -lc "npm ci || npm install"
+                '''
+            }
+        }
+
         stage('Ejecutar tests') {
             steps {
-                sh 'npm test'
+                sh '''
+                    docker run --rm \
+                      -v "$PWD:/app" \
+                      -w /app \
+                      ${NODE_IMAGE} \
+                      bash -lc "npm test"
+                '''
             }
         }
 
         stage('Construir Imagen Docker') {
-            when {
-                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-            }
             steps {
-                sh 'docker build -t hola-mundo-node:latest .'
+                sh 'docker build -t ${APP_IMAGE} .'
             }
         }
 
         stage('Ejecutar Contenedor Node.js') {
-            when {
-                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-            }
             steps {
                 sh '''
-                    docker stop hola-mundo-node || true
-                    docker rm hola-mundo-node || true
-                    docker run -d --name hola-mundo-node -p 3000:3000 hola-mundo-node:latest
+                    docker stop ${APP_CONTAINER} || true
+                    docker rm ${APP_CONTAINER} || true
+                    docker run -d --name ${APP_CONTAINER} -p 3000:3000 ${APP_IMAGE}
                 '''
             }
-        }
-    }
-}
- 
