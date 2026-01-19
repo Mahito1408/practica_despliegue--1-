@@ -57,3 +57,12 @@ pipeline {
                     docker run -d --name ${APP_CONTAINER} -p 3000:3000 ${APP_IMAGE}
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finalizado con estado: ${currentBuild.currentResult}"
+        }
+    }
+}
