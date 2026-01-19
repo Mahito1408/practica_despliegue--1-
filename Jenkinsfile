@@ -21,13 +21,21 @@ pipeline {
 
         stage('Instalar dependencias') {
             steps {
-                sh '''
-                    docker run --rm \
-                      -v "$PWD:/app" \
-                      -w /app \
-                      ${NODE_IMAGE} \
-                      bash -lc "npm ci || npm install"
-                '''
+                script {
+                    // Verificamos si 'package.json' existe antes de correr npm
+                    def fileExists = fileExists 'package.json'
+                    if (fileExists) {
+                        sh '''
+                            docker run --rm \
+                                -v "$PWD:/app" \
+                                -w /app \
+                                ${NODE_IMAGE} \
+                                bash -lc "npm install"
+                        '''
+                    } else {
+                        error 'No se encuentra el archivo package.json en el repositorio'
+                    }
+                }
             }
         }
 
