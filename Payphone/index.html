@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahito Store | Teléfonos Económicos</title>
+    <meta name="description"
+        content="Descubre los mejores productos tecnológicos con la mejor experiencia de compra. Pago seguro con PayPhone.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- PayPhone SDK -->
+    <link rel="stylesheet" href="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.css">
+    <script type="module" src="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Mahito<span class="logo-accent">Store</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#productos" class="nav-link">Productos</a></li>
+                <li><a href="#features" class="nav-link">Beneficios</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cart-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content container">
+            <div class="hero-badge">🚀 Nuevos teléfonos 2025</div>
+            <h1 class="hero-title">
+                Tecnología que
+                <span class="gradient-text">transforma</span>
+                tu vida
+            </h1>
+            <p class="hero-description">
+                Descubre los mejores dispositivos tecnológicos con garantía,
+                envío rápido y pagos seguros con PayPhone.
+            </p>
+            <div class="hero-buttons">
+                <a href="#productos" class="btn btn-primary">
+                    <span>Ver productos</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <a href="#features" class="btn btn-secondary">Conocer más</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-card card-1">
+                <div class="card-icon">🎧</div>
+                <span>Audio Premium</span>
+            </div>
+            <div class="floating-card card-2">
+                <div class="card-icon">📱</div>
+                <span>Smartphones</span>
+            </div>
+            <div class="floating-card card-3">
+                <div class="card-icon">💻</div>
+                <span>Laptops</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">¿Por qué elegirnos?</span>
+                <h2 class="section-title">La mejor experiencia de compra</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Pago 100% Seguro</h3>
+                    <p class="feature-description">Tus transacciones protegidas con PayPhone, certificado PCI DSS 4.0 y
+                        sistema antifraude.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Envío Rápido</h3>
+                    <p class="feature-description">Entrega en 24-48 horas a nivel nacional. Seguimiento en tiempo real
+                        de tu pedido.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Soporte 24/7</h3>
+                    <p class="feature-description">Atención personalizada cuando lo necesites. Estamos aquí para
+                        ayudarte siempre.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Garantía Extendida</h3>
+                    <p class="feature-description">Todos nuestros productos incluyen garantía. Tu inversión siempre
+                        protegida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="productos">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Catálogo</span>
+                <h2 class="section-title">Productos destacados</h2>
+                <p class="section-description">Selección premium en productos tecnológicos</p>
+            </div>
+
+            <div class="products-filter">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="audio">Audio</button>
+                <button class="filter-btn" data-filter="smartphones">Smartphones</button>
+                <button class="filter-btn" data-filter="laptops">Laptops</button>
+                <button class="filter-btn" data-filter="accesorios">Accesorios</button>
+            </div>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically loaded -->
+            </div>
+
+            <!-- Nota sobre límite de pruebas -->
+            <div
+                style="margin-top: 2rem; padding: 1rem; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 0.75rem; text-align: center;">
+                <p style="color: #92400e; font-size: 0.875rem;">
+                    <strong>⚠️ Modo de Pruebas:</strong> PayPhone en modo sandbox tiene un límite máximo de
+                    <strong>$1,000.00 USD</strong> por transacción.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Testimonios</span>
+                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Excelente experiencia de compra. El proceso con PayPhone fue súper
+                        rápido y seguro. ¡Mi teléfono llegó al día siguiente!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <strong>Silvia Mieles</strong>
+                            <span>Manta, Ecuador</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"La mejor tienda de tecnología. Precios competitivos y la garantía me da
+                        mucha tranquilidad. Muy recomendado."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">CP</div>
+                        <div class="author-info">
+                            <strong>Carlos Pérez</strong>
+                            <span>Guayaquil, Ecuador</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Compré mi laptop aquí y el soporte post-venta ha sido increíble.
+                        Definitivamente volveré a comprar."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AG</div>
+                        <div class="author-info">
+                            <strong>Ana García</strong>
+                            <span>Cuenca, Ecuador</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <span class="section-badge">Contacto</span>
+                    <h2 class="section-title">¿Tienes preguntas?</h2>
+                    <p>Estamos aquí para ayudarte. Contáctanos por cualquiera de nuestros canales.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <span>soporte@mahitostore.ec</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span>+593 99 123 4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span>Manta, Ecuador</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Tu email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tu mensaje" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo-text">Mahito<span class="logo-accent">Store</span></span>
+                    </a>
+                    <p>Tu tienda de tecnología de confianza con pagos seguros mediante PayPhone.</p>
+                    <div class="payment-methods">
+                        <span>Pagos seguros con:</span>
+                        <div class="payment-logos">
+                            <img src="https://www.payphone.app/images/logo-payphone.svg" alt="PayPhone"
+                                class="payment-logo">
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Tienda</h4>
+                        <ul>
+                            <li><a href="#productos">Productos</a></li>
+                            <li><a href="#">Ofertas</a></li>
+                            <li><a href="#">Nuevos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#">Sobre nosotros</a></li>
+                            <li><a href="#contacto">Contacto</a></li>
+                            <li><a href="#">Trabaja con nosotros</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Soporte</h4>
+                        <ul>
+                            <li><a href="#">Centro de ayuda</a></li>
+                            <li><a href="#">Políticas de envío</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Mahito Store. Todos los derechos reservados. Powered by PayPhone</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="cart-close" id="cart-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be dynamically loaded -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">$0.00</span>
+            </div>
+            <div class="cart-tax">
+                <span>IVA (15%):</span>
+                <span id="cart-tax">$0.00</span>
+            </div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <div id="cart-warning"
+                style="display: none; margin-bottom: 0.75rem; padding: 0.5rem; background: #fef3c7; border-radius: 0.5rem; font-size: 0.75rem; color: #92400e; text-align: center;">
+                ⚠️ Modo prueba: Máximo $10.00 USD
+            </div>
+            <button class="btn btn-primary btn-full checkout-btn" id="checkout-btn" disabled>
+                Proceder al pago
+            </button>
+        </div>
+    </aside>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h3>Finalizar Compra</h3>
+                <button class="modal-close" id="modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="payment-modal-body">
+                <div class="order-summary">
+                    <h4>Resumen del Pedido</h4>
+                    <div id="order-items"></div>
+                    <div class="order-totals">
+                        <div class="order-row">
+                            <span>Subtotal:</span>
+                            <span id="order-subtotal">$0.00</span>
+                        </div>
+                        <div class="order-row">
+                            <span>IVA (15%):</span>
+                            <span id="order-tax">$0.00</span>
+                        </div>
+                        <div class="order-row total">
+                            <span>Total a pagar:</span>
+                            <span id="order-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-section">
+                    <h4>Método de Pago</h4>
+                    <p class="payment-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Pago seguro con PayPhone - Acepta Visa, Mastercard, Diners y más
+                    </p>
+                    <div id="pp-button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toast-message">Producto agregado al carrito</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

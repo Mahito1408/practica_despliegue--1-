@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const fs = require('fs');
-const app = require('../index'); // Necesitamos exportar app desde index.js
+const app = require('../index'); // Necesitamos exportar 'app' desde index.js
 
 describe('API de usuarios', () => {
   const testUser = { id: 'test123', name: 'Test User', email: 'test@example.com' };
@@ -26,14 +26,14 @@ describe('API de usuarios', () => {
   });
 
   it('Debe obtener todos los usuarios', async () => {
-  const res = await request(app).get('/users');
-  expect(res.statusCode).toBe(200);
-  expect(Array.isArray(res.body)).toBe(true);
-});
+    const res = await request(app).get('/users');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
 
-it('Debe buscar el usuario creado', async () => {
-  const res = await request(app).get(`/users/${testUser.id}`);
-  expect(res.statusCode).toBe(200);
-  expect(res.body.user).toMatchObject(testUser);
-});
+  it('Debe buscar el usuario creado', async () => {
+    const res = await request(app).get(`/users/${testUser.id}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.user).toMatchObject(testUser);
+  });
 });

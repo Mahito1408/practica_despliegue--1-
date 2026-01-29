@@ -1,24 +1,26 @@
 {
-    "name": "hola-mundo-node",
-    "version": "1.0.0",
-    "description": "Mi aplicación Node.js",
-    "main": "index.js",
-    "scripts": {
-        "test": "jest"
-    },
-    "jest": {
-        "testEnvironment": "node"
-    },
-    "dependencies": {
-        "express": "^4.18.2",
-        "jest": "^30.2.0",
-        "supertest": "^7.2.2"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "directories": {
-        "test": "tests"
-    },
-    "devDependencies": {}
+  "name": "hola-mundo-node",
+  "version": "1.0.0",
+  "description": "Mi aplicación Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest --ci --runInBand",
+    "start": "node script.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "jest": "^30.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2"
+  }
 }

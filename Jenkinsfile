@@ -1,3 +1,5 @@
+
+
 pipeline {
     agent any
 
@@ -9,13 +11,14 @@ pipeline {
     stages {
         stage('Instalar dependencias') {
             steps {
-                sh 'chmod +x -R node_modules/.bin/'
                 sh 'npm install'
             }
         }
+
         stage('Ejecutar tests') {
             steps {
-                sh 'npm test'
+                sh 'chmod +x ./node_modules/.bin/jest'
+                sh 'npm test -- --ci --runInBand'
             }
         }
 
@@ -42,4 +45,3 @@ pipeline {
         }
     }
 }
- 

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación - Integración PayPhone | Mahito Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo span {
+            color: #0ea5e9;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            color: #0f172a;
+            margin-top: 1rem;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        h2 {
+            font-size: 1.375rem;
+            color: #0f172a;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0ea5e9;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            color: #334155;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #475569;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid #0ea5e9;
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #0369a1;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fefce8, #fef9c3);
+            border-left: 4px solid #f59e0b;
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #b45309;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.875rem;
+            color: #7c3aed;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0 1.5rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .code-comment {
+            color: #64748b;
+        }
+
+        .code-string {
+            color: #22c55e;
+        }
+
+        .code-key {
+            color: #38bdf8;
+        }
+
+        .code-number {
+            color: #f59e0b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        th,
+        td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-required {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-optional {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .flow-diagram {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .flow-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .flow-content h4 {
+            color: #0f172a;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .flow-content p {
+            margin-bottom: 0;
+            font-size: 0.9375rem;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .print-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 1rem;
+            }
+
+            .print-btn {
+                display: none;
+            }
+
+            pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚡ Mahito<span>Store</span></div>
+            <h1>Documentación de Integración con PayPhone</h1>
+            <p class="subtitle">Implementación de Pasarela de Pago - Cajita de Pagos</p>
+            <div class="meta-info">
+                <span>📅 Fecha: Diciembre 2025</span>
+                <span>👤 Autor: Maholy</span>
+                <span>📚 Materia: Integración de Plataformas</span>
+            </div>
+        </div>
+
+        <section>
+            <h2>1. Introducción</h2>
+            <p>
+                Este documento describe la implementación de la pasarela de pago <strong>PayPhone</strong>
+                en la aplicación <strong>Mahito Store</strong>. Se detalla el flujo completo
+                de la transacción, las funciones implementadas para el <strong>Request</strong> (solicitud)
+                y el <strong>Response</strong> (respuesta), así como los parámetros utilizados.
+            </p>
+
+            <div class="highlight-box">
+                <h4>🔒 Seguridad de PayPhone</h4>
+                <p style="margin-bottom: 0">
+                    PayPhone cuenta con certificación <strong>PCI DSS 4.0</strong>, autenticación 3D Secure,
+                    y motores antifraude. Las transacciones son encriptadas de extremo a extremo.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Flujo de la Transacción</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-content">
+                        <h4>Inicialización del SDK</h4>
+                        <p>Se carga el SDK de PayPhone (payphone-payment-box.js) y se configura con las credenciales del
+                            comercio.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-content">
+                        <h4>Preparación de la Transacción (REQUEST)</h4>
+                        <p>Se crea una instancia de <code>PPaymentButtonBox</code> con los datos de la orden: monto,
+                            impuestos, referencia, etc.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-content">
+                        <h4>Pago del Cliente</h4>
+                        <p>El usuario ingresa los datos de su tarjeta en el formulario seguro renderizado por PayPhone.
+                        </p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div class="flow-content">
+                        <h4>Redirección a URL de Respuesta</h4>
+                        <p>PayPhone redirige al usuario a la URL configurada con los parámetros <code>id</code> y
+                            <code>clientTransactionId</code>.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">5</div>
+                    <div class="flow-content">
+                        <h4>Confirmación (RESPONSE)</h4>
+                        <p>Se realiza un POST al endpoint <code>/api/button/V2/Confirm</code> para obtener el estado
+                            final de la transacción.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Función de REQUEST (Solicitud de Pago)</h2>
+            <p>
+                La función <code>initializePayPhone()</code> es responsable de inicializar el SDK de PayPhone
+                y preparar la transacción con todos los datos necesarios.
+            </p>
+
+            <h3>3.1 Código de Implementación</h3>
+            <pre><code><span class="code-comment">/**
+ * Inicializa la Cajita de Pagos de PayPhone
+ * @param {Object} totals - Objeto con los totales calculados
+ */</span>
+function initializePayPhone(totals) {
+    <span class="code-comment">// Generar ID único de transacción</span>
+    const clientTransactionId = generateTransactionId();
+    
+    <span class="code-comment">// Crear instancia del SDK con la configuración</span>
+    const ppb = new PPaymentButtonBox({
+        <span class="code-comment">// === CREDENCIALES ===</span>
+        <span class="code-key">token</span>: <span class="code-string">'TU_TOKEN_DE_PAYPHONE'</span>,
+        <span class="code-key">storeId</span>: <span class="code-string">'TU_STORE_ID'</span>,
+        
+        <span class="code-comment">// === MONTOS (en centavos) ===</span>
+        <span class="code-key">amount</span>: <span class="code-number">11500</span>,        <span class="code-comment">// Total: $115.00</span>
+        <span class="code-key">amountWithTax</span>: <span class="code-number">10000</span>, <span class="code-comment">// Base: $100.00</span>
+        <span class="code-key">tax</span>: <span class="code-number">1500</span>,            <span class="code-comment">// IVA: $15.00</span>
+        <span class="code-key">tip</span>: <span class="code-number">0</span>,
+        <span class="code-key">service</span>: <span class="code-number">0</span>,
+        
+        <span class="code-comment">// === IDENTIFICACIÓN ===</span>
+        <span class="code-key">clientTransactionId</span>: clientTransactionId,
+        <span class="code-key">reference</span>: <span class="code-string">'Compra TechStore Pro'</span>,
+        
+        <span class="code-comment">// === CONFIGURACIÓN REGIONAL ===</span>
+        <span class="code-key">currency</span>: <span class="code-string">'USD'</span>,
+        <span class="code-key">lang</span>: <span class="code-string">'es'</span>,
+        <span class="code-key">timeZone</span>: <span class="code-number">-5</span>,
+        
+        <span class="code-comment">// === MÉTODO POR DEFECTO ===</span>
+        <span class="code-key">defaultMethod</span>: <span class="code-string">'card'</span>
+    }).render(<span class="code-string">'pp-button'</span>);
+}</code></pre>
+
+            <h3>3.2 Parámetros del REQUEST</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parámetro</th>
+                        <th>Tipo</th>
+                        <th>Requerido</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>token</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-required">Sí</span></td>
+                        <td>Credencial de autenticación del comercio obtenida en PayPhone Developer</td>
+                    </tr>
+                    <tr>
+                        <td><code>storeId</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Identificador de la sucursal/tienda</td>
+                    </tr>
+                    <tr>
+                        <td><code>amount</code></td>
+                        <td>Integer</td>
+                        <td><span class="badge badge-required">Sí</span></td>
+                        <td>Monto total en centavos (ej: $10.00 = 1000)</td>
+                    </tr>
+                    <tr>
+                        <td><code>amountWithTax</code></td>
+                        <td>Integer</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Monto base gravable en centavos (sin incluir el impuesto)</td>
+                    </tr>
+                    <tr>
+                        <td><code>tax</code></td>
+                        <td>Integer</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Monto del impuesto en centavos</td>
+                    </tr>
+                    <tr>
+                        <td><code>clientTransactionId</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-required">Sí</span></td>
+                        <td>ID único generado por el comercio para rastrear la transacción (máx. 50 caracteres)</td>
+                    </tr>
+                    <tr>
+                        <td><code>reference</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Descripción o motivo del pago (máx. 100 caracteres)</td>
+                    </tr>
+                    <tr>
+                        <td><code>currency</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Código de moneda ISO 4217 (USD para Ecuador)</td>
+                    </tr>
+                    <tr>
+                        <td><code>lang</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>Idioma del formulario: "es" (español) o "en" (inglés)</td>
+                    </tr>
+                    <tr>
+                        <td><code>defaultMethod</code></td>
+                        <td>String</td>
+                        <td><span class="badge badge-optional">Opcional</span></td>
+                        <td>"card" (tarjeta) o "payphone" (saldo PayPhone)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ Importante: Cálculo de Montos</h4>
+                <p style="margin-bottom: 0">
+                    Todos los montos deben enviarse en <strong>centavos</strong> (multiplicar el valor en
+                    dólares por 100). El campo <code>amount</code> debe ser igual a la suma:
+                    <code>amountWithTax + tax + tip + service</code>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Función de RESPONSE (Confirmación de Pago)</h2>
+            <p>
+                La función <code>confirmTransaction()</code> se ejecuta cuando PayPhone redirige al usuario
+                de vuelta a nuestra aplicación. Esta función realiza una solicitud al API de confirmación
+                para obtener el estado final de la transacción.
+            </p>
+
+            <h3>4.1 Código de Implementación</h3>
+            <pre><code><span class="code-comment">/**
+ * Confirma la transacción con el API de PayPhone
+ * @param {string} transactionId - ID de transacción de PayPhone
+ * @param {string} clientTransactionId - ID del comercio
+ */</span>
+async function confirmTransaction(transactionId, clientTransactionId) {
+    <span class="code-comment">// Endpoint de confirmación</span>
+    const endpoint = <span class="code-string">'https://pay.payphonetodoesposible.com/api/button/V2/Confirm'</span>;
+    
+    <span class="code-comment">// Preparar el cuerpo de la solicitud</span>
+    const requestBody = {
+        <span class="code-key">id</span>: parseInt(transactionId),
+        <span class="code-key">clientTxId</span>: clientTransactionId
+    };
+    
+    <span class="code-comment">// Realizar la solicitud POST</span>
+    const response = await fetch(endpoint, {
+        <span class="code-key">method</span>: <span class="code-string">'POST'</span>,
+        <span class="code-key">headers</span>: {
+            <span class="code-string">'Authorization'</span>: <span class="code-string">`Bearer ${TOKEN}`</span>,
+            <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>
+        },
+        <span class="code-key">body</span>: JSON.stringify(requestBody)
+    });
+    
+    const data = await response.json();
+    
+    <span class="code-comment">// Procesar según el código de estado</span>
+    if (data.<span class="code-key">statusCode</span> === <span class="code-number">3</span>) {
+        <span class="code-comment">// Transacción APROBADA</span>
+        showSuccess(data);
+    } else if (data.<span class="code-key">statusCode</span> === <span class="code-number">2</span>) {
+        <span class="code-comment">// Transacción CANCELADA</span>
+        showCancelled(data);
+    } else {
+        <span class="code-comment">// Error</span>
+        showError(data);
+    }
+}</code></pre>
+
+            <h3>4.2 Parámetros del RESPONSE</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parámetro</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>statusCode</code></td>
+                        <td>Integer</td>
+                        <td>Código de estado: <strong>3 = Aprobada</strong>, <strong>2 = Cancelada</strong></td>
+                    </tr>
+                    <tr>
+                        <td><code>transactionStatus</code></td>
+                        <td>String</td>
+                        <td>Estado legible: "Approved" o "Canceled"</td>
+                    </tr>
+                    <tr>
+                        <td><code>transactionId</code></td>
+                        <td>Integer</td>
+                        <td>ID único de la transacción asignado por PayPhone</td>
+                    </tr>
+                    <tr>
+                        <td><code>clientTransactionId</code></td>
+                        <td>String</td>
+                        <td>ID de la transacción enviado en el request</td>
+                    </tr>
+                    <tr>
+                        <td><code>authorizationCode</code></td>
+                        <td>String</td>
+                        <td>Código de autorización bancario</td>
+                    </tr>
+                    <tr>
+                        <td><code>amount</code></td>
+                        <td>Integer</td>
+                        <td>Monto cobrado en centavos</td>
+                    </tr>
+                    <tr>
+                        <td><code>cardType</code></td>
+                        <td>String</td>
+                        <td>Tipo: "Credit" o "Debit"</td>
+                    </tr>
+                    <tr>
+                        <td><code>cardBrand</code></td>
+                        <td>String</td>
+                        <td>Marca y banco emisor de la tarjeta</td>
+                    </tr>
+                    <tr>
+                        <td><code>bin</code></td>
+                        <td>String</td>
+                        <td>Primeros 6 dígitos de la tarjeta</td>
+                    </tr>
+                    <tr>
+                        <td><code>lastDigits</code></td>
+                        <td>String</td>
+                        <td>Últimos 4 dígitos de la tarjeta</td>
+                    </tr>
+                    <tr>
+                        <td><code>email</code></td>
+                        <td>String</td>
+                        <td>Correo electrónico del pagador</td>
+                    </tr>
+                    <tr>
+                        <td><code>phoneNumber</code></td>
+                        <td>String</td>
+                        <td>Número de teléfono del pagador</td>
+                    </tr>
+                    <tr>
+                        <td><code>document</code></td>
+                        <td>String</td>
+                        <td>Número de documento del pagador</td>
+                    </tr>
+                    <tr>
+                        <td><code>date</code></td>
+                        <td>String</td>
+                        <td>Fecha y hora en formato ISO 8601</td>
+                    </tr>
+                    <tr>
+                        <td><code>currency</code></td>
+                        <td>String</td>
+                        <td>Moneda utilizada (USD)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>5. Ejemplo de Response Exitoso (JSON)</h2>
+            <pre><code>{
+    <span class="code-key">"statusCode"</span>: <span class="code-number">3</span>,
+    <span class="code-key">"transactionStatus"</span>: <span class="code-string">"Approved"</span>,
+    <span class="code-key">"transactionId"</span>: <span class="code-number">23178284</span>,
+    <span class="code-key">"clientTransactionId"</span>: <span class="code-string">"TS-20241207-153000-ABC123"</span>,
+    <span class="code-key">"authorizationCode"</span>: <span class="code-string">"W23178284"</span>,
+    <span class="code-key">"amount"</span>: <span class="code-number">11500</span>,
+    <span class="code-key">"cardType"</span>: <span class="code-string">"Credit"</span>,
+    <span class="code-key">"cardBrand"</span>: <span class="code-string">"Visa Banco del Pacífico"</span>,
+    <span class="code-key">"bin"</span>: <span class="code-string">"411111"</span>,
+    <span class="code-key">"lastDigits"</span>: <span class="code-string">"1111"</span>,
+    <span class="code-key">"email"</span>: <span class="code-string">"cliente@ejemplo.com"</span>,
+    <span class="code-key">"phoneNumber"</span>: <span class="code-string">"593999999999"</span>,
+    <span class="code-key">"document"</span>: <span class="code-string">"0923456789"</span>,
+    <span class="code-key">"currency"</span>: <span class="code-string">"USD"</span>,
+    <span class="code-key">"reference"</span>: <span class="code-string">"Compra Mahito Store - 3 producto(s)"</span>,
+    <span class="code-key">"date"</span>: <span class="code-string">"2025-12-07T15:30:26.367"</span>
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>6. Archivos del Proyecto</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>index.html</code></td>
+                        <td>Página principal de la tienda con catálogo de productos y carrito de compras</td>
+                    </tr>
+                    <tr>
+                        <td><code>styles.css</code></td>
+                        <td>Estilos CSS con diseño moderno, glassmorphism y animaciones</td>
+                    </tr>
+                    <tr>
+                        <td><code>app.js</code></td>
+                        <td>Lógica de la aplicación: carrito, productos y función de REQUEST</td>
+                    </tr>
+                    <tr>
+                        <td><code>respuesta.html</code></td>
+                        <td>Página de confirmación con función de RESPONSE</td>
+                    </tr>
+                    <tr>
+                        <td><code>documentacion.html</code></td>
+                        <td>Este documento de documentación técnica</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>7. Modo de Pruebas</h2>
+            <p>
+                La aplicación está configurada en <strong>modo de pruebas (sandbox)</strong>. Las transacciones
+                realizadas no generan cargos reales. Para probar el sistema:
+            </p>
+
+            <div class="highlight-box">
+                <h4>💳 Datos de Tarjeta de Prueba</h4>
+                <p>
+                    <strong>Número:</strong> 4111 1111 1111 1111<br>
+                    <strong>Fecha de vencimiento:</strong> Cualquier fecha futura<br>
+                    <strong>CVV:</strong> Cualquier número de 3 dígitos<br>
+                    <strong>Nombre:</strong> Cualquier nombre
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>8. Conclusiones</h2>
+            <p>
+                La integración de PayPhone en Mahito Store demuestra un flujo completo con pasarela de pago segura. Los puntos clave implementados son:
+            </p>
+            <ul style="margin-left: 2rem; color: #475569;">
+                <li>Uso de la <strong>Cajita de Pagos</strong> (SDK JavaScript) para una integración rápida</li>
+                <li>Generación de <strong>ID de transacción único</strong> para trazabilidad</li>
+                <li>Cálculo correcto de <strong>montos en centavos</strong> incluyendo impuestos</li>
+                <li>Implementación del <strong>API Confirm</strong> para verificar el estado final</li>
+                <li>Manejo de <strong>estados de respuesta</strong> (aprobado, cancelado, error)</li>
+                <li>Interfaz de usuario <strong>moderna y responsive</strong> con feedback visual</li>
+            </ul>
+        </section>
+
+        <button class="print-btn" onclick="window.print()">
+            📄 Descargar como PDF
+        </button>
+
+        <div class="footer">
+            <p>
+                Documentación generada para el curso de <strong>Integración de Plataformas</strong><br>
+                Diciembre 2025 - Mahito Store con PayPhone
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

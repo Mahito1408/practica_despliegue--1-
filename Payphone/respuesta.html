@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado del Pago | Mahito Store</title>
+    <meta name="description" content="Resultado de tu transacción en Mahito Store">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos de la página de respuesta */
+        .response-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+        }
+
+        .response-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .response-card {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .response-header {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .response-header.success {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .response-header.error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .response-header.cancelled {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .response-header.loading {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.05));
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .response-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .success .response-icon {
+            background: rgba(34, 197, 94, 0.2);
+        }
+
+        .error .response-icon {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .cancelled .response-icon {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .loading .response-icon {
+            background: rgba(14, 165, 233, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .response-title {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .response-message {
+            color: var(--neutral-400);
+            font-size: 1rem;
+        }
+
+        .response-body {
+            padding: 2rem;
+        }
+
+        .response-details {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+        }
+
+        .response-details h4 {
+            font-size: 0.875rem;
+            color: var(--neutral-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--neutral-400);
+            font-size: 0.9375rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .detail-value.highlight {
+            color: var(--success-500);
+        }
+
+        .detail-value.amount {
+            color: var(--primary-400);
+            font-size: 1.125rem;
+        }
+
+        .response-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .response-actions .btn {
+            flex: 1;
+        }
+
+        /* JSON Response Preview */
+        .json-preview {
+            margin-top: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .json-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .json-header h5 {
+            font-size: 0.875rem;
+            color: var(--neutral-300);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .json-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-400);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .json-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .json-body.expanded {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .json-content {
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8125rem;
+            color: var(--neutral-300);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* Log Console */
+        .log-console {
+            margin-top: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+        }
+
+        .log-title {
+            font-size: 0.875rem;
+            color: var(--neutral-400);
+            margin-bottom: 1rem;
+        }
+
+        .log-entry {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8125rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            color: var(--neutral-500);
+            margin-right: 0.5rem;
+        }
+
+        .log-type {
+            padding: 0.125rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+
+        .log-type.info {
+            background: rgba(14, 165, 233, 0.2);
+            color: var(--primary-400);
+        }
+
+        .log-type.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success-500);
+        }
+
+        .log-type.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error-500);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Mahito<span class="logo-accent">Store</span></span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="response-page">
+        <div class="response-container">
+            <div class="response-card" id="response-card">
+                <!-- Estado de carga inicial -->
+                <div class="response-header loading" id="response-header">
+                    <div class="response-icon" id="response-icon">⏳</div>
+                    <h1 class="response-title" id="response-title">Procesando pago...</h1>
+                    <p class="response-message" id="response-message">Por favor espera mientras confirmamos tu
+                        transacción</p>
+                </div>
+
+                <div class="response-body">
+                    <div class="response-details" id="response-details">
+                        <h4>Detalles de la Transacción</h4>
+                        <div id="details-content">
+                            <div class="detail-row">
+                                <span class="detail-label">Verificando transacción...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Log de la transacción -->
+                    <div class="log-console" id="log-console">
+                        <div class="log-title">📋 Log de la Transacción</div>
+                        <div id="log-entries"></div>
+                    </div>
+
+                    <!-- JSON Response (para desarrollo/documentación) -->
+                    <div class="json-preview" id="json-preview" style="display: none;">
+                        <div class="json-header" onclick="toggleJson()">
+                            <h5>📄 Response JSON (API Confirm)</h5>
+                            <button class="json-toggle" id="json-toggle">Mostrar</button>
+                        </div>
+                        <div class="json-body" id="json-body">
+                            <pre class="json-content" id="json-content"></pre>
+                        </div>
+                    </div>
+
+                    <!-- Formulario Manual para verificar transacción -->
+                    <div id="manual-form-container"
+                        style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px;">
+                        <h4 style="color: var(--primary-400); margin-bottom: 1rem; font-size: 1rem;">📲 Ingresa el ID de
+                            PayPhone</h4>
+                        <p style="color: var(--neutral-400); font-size: 0.875rem; margin-bottom: 1rem;">
+                            Cuando completaste el pago en PayPhone, te mostraron un ID de transacción. Cópialo aquí:
+                        </p>
+                        <div style="margin-bottom: 1rem;">
+                            <label
+                                style="display: block; color: var(--neutral-300); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                                ID de Transacción PayPhone *
+                            </label>
+                            <input type="text" id="manual-tx-id" placeholder="Ej: 72395293"
+                                style="width: 100%; padding: 0.75rem 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 1rem;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label
+                                style="display: block; color: var(--neutral-300); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                                Client Transaction ID (opcional)
+                            </label>
+                            <input type="text" id="manual-client-tx-id"
+                                placeholder="Se tomará del último pago si lo dejas vacío"
+                                style="width: 100%; padding: 0.75rem 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 0.875rem;">
+                        </div>
+                        <button onclick="verifyManualTransaction()" class="btn btn-primary" style="width: 100%;">
+                            🔍 Verificar Transacción
+                        </button>
+                    </div>
+
+                    <div class="response-actions">
+                        <a href="index.html" class="btn btn-secondary">Volver a la tienda</a>
+                        <button class="btn btn-primary" id="action-btn" style="display: none;">Descargar
+                            comprobante</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * PÁGINA DE RESPUESTA DE PAYPHONE
+         * 
+         * Esta página recibe los parámetros de la URL después de que el usuario
+         * completa el proceso de pago en PayPhone y realiza la confirmación
+         * de la transacción mediante el API Button/Confirm.
+         * 
+         * FLUJO:
+         * 1. PayPhone redirige al usuario a esta página con los parámetros:
+         *    - id: ID de transacción generado por PayPhone
+         *    - clientTransactionId: ID generado por nuestro sistema
+         * 
+         * 2. Se realiza una petición POST al endpoint de confirmación:
+         *    https://pay.payphonetodoesposible.com/api/button/V2/Confirm
+         * 
+         * 3. Se procesa la respuesta y se muestra el resultado al usuario
+         */
+
+        // Configuración de PayPhone
+        const PAYPHONE_CONFIG = {
+            token: 'Iq_lZ81dXVzBi3hRJONlrUC-XreoEEYKE-N19ZodnvwPtW-_o7tWHRx4Ny3lmfnFRcHN6K1LTGcJu2Zk8m5lSoZ_ExWez7YMmeuGSxRo5MCVJqwIDQj7rkl82SaANDQE3kQPxsiKFYaP94EepUunyo3ZF5hnKsBcyp5T0NthjYIStBM1fMqIiGetkNFbkwOWHddGbb3WmFLshQYdFt909Fp-oRifpgTCvKDix11LMRYqA4u0PYshPIYPER14sMv1h_Iv317jzmUHqekKvUvokdtZPAQtgl4kandQ6Pc5ubkQA2lLBjNBIL3njzR7__sBOBg6JA',
+            confirmEndpoint: 'https://pay.payphonetodoesposible.com/api/button/V2/Confirm'
+        };
+
+        // Elementos del DOM
+        const elements = {
+            responseHeader: document.getElementById('response-header'),
+            responseIcon: document.getElementById('response-icon'),
+            responseTitle: document.getElementById('response-title'),
+            responseMessage: document.getElementById('response-message'),
+            detailsContent: document.getElementById('details-content'),
+            logEntries: document.getElementById('log-entries'),
+            jsonPreview: document.getElementById('json-preview'),
+            jsonContent: document.getElementById('json-content'),
+            jsonBody: document.getElementById('json-body'),
+            actionBtn: document.getElementById('action-btn')
+        };
+
+        // Variable para almacenar la respuesta
+        let transactionResponse = null;
+
+        /**
+         * Agrega una entrada al log visual
+         */
+        function addLog(type, message) {
+            const time = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-time">[${time}]</span>
+                <span class="log-type ${type}">${type.toUpperCase()}</span>
+                <span class="log-message">${message}</span>
+            `;
+            elements.logEntries.appendChild(logEntry);
+
+            // También log en consola
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        /**
+         * Toggle para mostrar/ocultar JSON
+         */
+        function toggleJson() {
+            elements.jsonBody.classList.toggle('expanded');
+            document.getElementById('json-toggle').textContent =
+                elements.jsonBody.classList.contains('expanded') ? 'Ocultar' : 'Mostrar';
+        }
+
+        /**
+         * FUNCIÓN PRINCIPAL: Confirmar transacción con PayPhone
+         * 
+         * REQUEST al API Confirm:
+         * - Endpoint: POST https://pay.payphonetodoesposible.com/api/button/V2/Confirm
+         * - Headers:
+         *   - Authorization: Bearer {token}
+         *   - Content-Type: application/json
+         * - Body:
+         *   {
+         *     "id": number,          // ID de transacción de PayPhone
+         *     "clientTxId": string   // ID de transacción del comercio
+         *   }
+         * 
+         * RESPONSE (éxito):
+         * {
+         *   "statusCode": 3,                    // 3 = Aprobada, 2 = Cancelada
+         *   "transactionStatus": "Approved",    // Estado de la transacción
+         *   "transactionId": 12345678,          // ID único de PayPhone
+         *   "clientTransactionId": "TS-...",    // ID del comercio
+         *   "authorizationCode": "W12345678",   // Código de autorización bancario
+         *   "amount": 11500,                    // Monto en centavos
+         *   "cardType": "Credit",               // Tipo de tarjeta
+         *   "cardBrand": "Visa Banco del...",   // Marca y banco emisor
+         *   "bin": "411111",                    // Primeros 6 dígitos
+         *   "lastDigits": "1111",               // Últimos 4 dígitos
+         *   "email": "cliente@email.com",       // Email del pagador
+         *   "phoneNumber": "593999999999",      // Teléfono del pagador
+         *   "document": "0123456789",           // Cédula del pagador
+         *   "currency": "USD",                  // Moneda
+         *   "reference": "Compra...",           // Referencia del pago
+         *   "date": "2024-01-01T12:00:00"       // Fecha/hora
+         * }
+         */
+        async function confirmTransaction(transactionId, clientTransactionId) {
+            addLog('info', 'Iniciando confirmación de transacción...');
+            addLog('info', `Transaction ID: ${transactionId}`);
+            addLog('info', `Client Transaction ID: ${clientTransactionId}`);
+
+            try {
+                // Preparar el cuerpo de la solicitud
+                const requestBody = {
+                    id: parseInt(transactionId),
+                    clientTxId: clientTransactionId
+                };
+
+                addLog('info', `Enviando POST a ${PAYPHONE_CONFIG.confirmEndpoint}`);
+                addLog('info', `Request Body: ${JSON.stringify(requestBody)}`);
+
+                // Realizar la solicitud de confirmación
+                const response = await fetch(PAYPHONE_CONFIG.confirmEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${PAYPHONE_CONFIG.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                addLog('info', `Response Status: ${response.status}`);
+
+                const data = await response.json();
+                transactionResponse = data;
+
+                // Mostrar JSON de respuesta
+                elements.jsonContent.textContent = JSON.stringify(data, null, 2);
+                elements.jsonPreview.style.display = 'block';
+
+                console.log('=== PAYPHONE RESPONSE (API Confirm) ===');
+                console.log(data);
+                console.log('=======================================');
+
+                // Procesar respuesta según el código de estado
+                if (data.statusCode === 3) {
+                    // TRANSACCIÓN APROBADA
+                    addLog('success', '¡Transacción APROBADA!');
+                    showSuccess(data);
+                    clearCart();
+                } else if (data.statusCode === 2) {
+                    // TRANSACCIÓN CANCELADA
+                    addLog('error', 'Transacción CANCELADA por el usuario');
+                    showCancelled(data);
+                } else if (data.errorCode) {
+                    // ERROR
+                    addLog('error', `Error: ${data.message}`);
+                    showError(data);
+                } else {
+                    // ESTADO DESCONOCIDO
+                    addLog('error', 'Estado de transacción desconocido');
+                    showError({ message: 'Estado de transacción desconocido' });
+                }
+
+            } catch (error) {
+                addLog('error', `Error de conexión: ${error.message}`);
+                console.error('Error al confirmar transacción:', error);
+                showError({ message: 'Error de conexión con el servidor de pagos' });
+            }
+        }
+
+        /**
+         * Muestra el estado de éxito
+         */
+        function showSuccess(data) {
+            elements.responseHeader.className = 'response-header success';
+            elements.responseIcon.textContent = '✓';
+            elements.responseTitle.textContent = '¡Pago Exitoso!';
+            elements.responseMessage.textContent = 'Tu transacción ha sido procesada correctamente';
+
+            const amount = data.amount ? (data.amount / 100).toFixed(2) : '0.00';
+
+            elements.detailsContent.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Estado</span>
+                    <span class="detail-value highlight">${data.transactionStatus || 'Aprobada'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Código de Autorización</span>
+                    <span class="detail-value">${data.authorizationCode || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">ID de Transacción</span>
+                    <span class="detail-value">${data.transactionId || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Referencia</span>
+                    <span class="detail-value">${data.clientTransactionId || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Método de Pago</span>
+                    <span class="detail-value">${data.cardBrand || 'Tarjeta'} (${data.cardType || ''})</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tarjeta</span>
+                    <span class="detail-value">**** **** **** ${data.lastDigits || '****'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha</span>
+                    <span class="detail-value">${formatDate(data.date)}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Monto Total</span>
+                    <span class="detail-value amount">$${amount} ${data.currency || 'USD'}</span>
+                </div>
+            `;
+
+            elements.actionBtn.style.display = 'flex';
+            elements.actionBtn.textContent = 'Descargar Comprobante';
+            elements.actionBtn.onclick = () => downloadReceipt(data);
+        }
+
+        /**
+         * Muestra el estado de cancelado
+         */
+        function showCancelled(data) {
+            elements.responseHeader.className = 'response-header cancelled';
+            elements.responseIcon.textContent = '⚠️';
+            elements.responseTitle.textContent = 'Pago Cancelado';
+            elements.responseMessage.textContent = 'La transacción fue cancelada';
+
+            elements.detailsContent.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Estado</span>
+                    <span class="detail-value">${data.transactionStatus || 'Cancelado'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Referencia</span>
+                    <span class="detail-value">${data.clientTransactionId || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Mensaje</span>
+                    <span class="detail-value">${data.message || 'Transacción cancelada por el usuario'}</span>
+                </div>
+            `;
+        }
+
+        /**
+         * Muestra el estado de error
+         */
+        function showError(data) {
+            elements.responseHeader.className = 'response-header error';
+            elements.responseIcon.textContent = '✗';
+            elements.responseTitle.textContent = 'Error en el Pago';
+            elements.responseMessage.textContent = 'No se pudo procesar la transacción';
+
+            elements.detailsContent.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Error</span>
+                    <span class="detail-value">${data.message || 'Error desconocido'}</span>
+                </div>
+                ${data.errorCode ? `
+                <div class="detail-row">
+                    <span class="detail-label">Código de Error</span>
+                    <span class="detail-value">${data.errorCode}</span>
+                </div>
+                ` : ''}
+            `;
+        }
+
+        /**
+         * Formatea la fecha
+         */
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleString('es-EC', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch {
+                return dateString;
+            }
+        }
+
+        /**
+         * Limpia el carrito después de una compra exitosa
+         */
+        function clearCart() {
+            localStorage.removeItem('mahitostore_cart');
+            addLog('info', 'Carrito de compras limpiado');
+        }
+
+        /**
+         * Genera y descarga un comprobante de pago
+         */
+        function downloadReceipt(data) {
+            const amount = data.amount ? (data.amount / 100).toFixed(2) : '0.00';
+            const receipt = `
+╔══════════════════════════════════════════════════════════════╗
+║                     MAHITO STORE                             ║
+║                   COMPROBANTE DE PAGO                         ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  Estado: ${(data.transactionStatus || 'Aprobada').padEnd(45)}║
+║  Fecha: ${formatDate(data.date).padEnd(46)}║
+║                                                               ║
+╠══════════════════════════════════════════════════════════════╣
+║  DETALLES DE LA TRANSACCIÓN                                  ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  ID Transacción: ${String(data.transactionId || 'N/A').padEnd(36)}║
+║  Código Autorización: ${String(data.authorizationCode || 'N/A').padEnd(31)}║
+║  Referencia: ${String(data.clientTransactionId || 'N/A').padEnd(40)}║
+║                                                               ║
+╠══════════════════════════════════════════════════════════════╣
+║  MÉTODO DE PAGO                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  Tarjeta: ${String(data.cardBrand || 'N/A').padEnd(43)}║
+║  Tipo: ${String(data.cardType || 'N/A').padEnd(46)}║
+║  Número: **** **** **** ${String(data.lastDigits || '****').padEnd(28)}║
+║                                                               ║
+╠══════════════════════════════════════════════════════════════╣
+║  TOTAL PAGADO: $${amount} ${data.currency || 'USD'}                               ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  ¡Gracias por tu compra!                                     ║
+║  Pago procesado de forma segura con PayPhone                 ║
+║                                                               ║
+╚══════════════════════════════════════════════════════════════╝
+            `.trim();
+
+            const blob = new Blob([receipt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `comprobante-${data.transactionId || 'pago'}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            addLog('success', 'Comprobante descargado');
+        }
+
+        // Exponer toggle para onclick
+        window.toggleJson = toggleJson;
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('info', 'Página de respuesta cargada');
+
+            // Obtener parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionId = urlParams.get('id');
+            const clientTransactionId = urlParams.get('clientTransactionId');
+
+            if (transactionId && clientTransactionId) {
+                addLog('info', 'Parámetros de transacción recibidos');
+                // Ocultar formulario manual si hay parámetros
+                document.getElementById('manual-form-container').style.display = 'none';
+                confirmTransaction(transactionId, clientTransactionId);
+            } else {
+                addLog('error', 'No se recibieron parámetros de transacción');
+                // Mostrar formulario manual para ingresar los IDs
+                showManualForm();
+            }
+        });
+
+        /**
+         * Muestra un formulario para ingresar manualmente los IDs
+         */
+        function showManualForm() {
+            elements.responseHeader.className = 'response-header loading';
+            elements.responseIcon.textContent = '📝';
+            elements.responseTitle.textContent = 'Verificar Pago Manualmente';
+            elements.responseMessage.textContent = 'Ingresa los datos de la transacción de PayPhone';
+
+            document.getElementById('manual-form-container').style.display = 'block';
+
+            elements.detailsContent.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Info</span>
+                    <span class="detail-value">Copia el ID de transacción que aparece en PayPhone</span>
+                </div>
+            `;
+        }
+
+        /**
+         * Verifica la transacción con los IDs ingresados manualmente
+         */
+        function verifyManualTransaction() {
+            const txId = document.getElementById('manual-tx-id').value.trim();
+            const clientTxId = document.getElementById('manual-client-tx-id').value.trim();
+
+            if (!txId) {
+                alert('Por favor ingresa el ID de transacción de PayPhone');
+                return;
+            }
+
+            // Si no hay clientTxId, usar uno genérico
+            const finalClientTxId = clientTxId || localStorage.getItem('lastTransactionId') || 'MANUAL-' + Date.now();
+
+            addLog('info', 'Verificando transacción manualmente...');
+            document.getElementById('manual-form-container').style.display = 'none';
+
+            confirmTransaction(txId, finalClientTxId);
+        }
+
+        // Exponer función para onclick
+        window.verifyManualTransaction = verifyManualTransaction;
+    </script>
+</body>
+
+</html>
